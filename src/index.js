@@ -78,9 +78,12 @@ class ClockFace extends React.Component{
      constructor(props){
     super(props);
     this.state = {isActive:false,
-                  isFinished:false
+                  isFinished:false,
+                  time_min:4,
+                  time_sec:this.pad(0)
                  }
-    
+    this.countdownTimer = this.countdownTimer.bind(this);
+    this.stopTimer = this.stopTimer.bind(this);
     
     }
     pad(n){
@@ -90,20 +93,42 @@ class ClockFace extends React.Component{
         return n;
     }
     
+    countdownTimer(){
+        
+        this.setState({
+            isActive:true
+        })
+        
+//        setInterval(function(){
+//            console.
+//        },1000)
+    }
+    
+    stopTimer(){
+        this.setState({
+            isActive:false
+        })
+    }
+    
 
     
     
   render()
     {
-    let time_min = this.props.time;
-    let time_sec = 0;
-    let time_sec_p = this.pad(time_sec);
+        let isActive = this.state.isActive;
+        let active_button =<button className = "btn btn-success btn-lg" onClick={this.countdownTimer}>Start</button>;
+        if(isActive){
+            active_button = <button className = "btn btn-danger btn-lg" onClick={this.stopTimer}>Stop</button>;
+            
+        }
+        
 
     return(
       <div id = "clock-whole">
         <div className = "inside-clock">
-          <h1>{time_min + ":"+time_sec_p}</h1>
-          <button className = "btn btn-success btn-lg">Start</button>
+          <h1>{this.state.time_min + ":"+this.state.time_sec}</h1>
+            {active_button}
+          
           <button className = "btn btn-success btn-lg">Reset</button>
          
         </div>
