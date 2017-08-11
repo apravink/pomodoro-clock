@@ -117,18 +117,19 @@ class ClockFace extends React.Component{
     {
         let isActive = this.state.isActive;
         let active_button =<button className = "btn btn-success btn-lg" onClick={this.countdownTimer}>Start</button>;
+        var clock_classes = "clock-whole"
         if(isActive){
             active_button = <button className = "btn btn-danger btn-lg" onClick={this.stopTimer}>Stop</button>;
+            clock_classes +=" isActive";
             
         }
         
 
     return(
-      <div id = "clock-whole">
+      <div className = {clock_classes}>
         <div className = "inside-clock">
           <h1>{this.state.time_min + ":"+this.state.time_sec}</h1>
             {active_button}
-          
           <button className = "btn btn-success btn-lg">Reset</button>
          
         </div>
