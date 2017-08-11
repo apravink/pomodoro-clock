@@ -68,21 +68,44 @@ class TimerForm extends React.Component {
 //--------------------------------------------------------//
 //ToDo
 /*
-1. Create states: running and stopped and finished
+1. Create states
+    i. isActive
+    ii.isfinished
 2. Create classes for the button and clock-face to turn green/red while running/stopped
+
 */
 class ClockFace extends React.Component{
-  constructor(props){
+     constructor(props){
     super(props);
-    this.state = {timer_state:''}
+    this.state = {isActive:false,
+                  isFinished:false
+                 }
     
-  }
-  render(){
+    
+    }
+    pad(n){
+        if(n<10){
+            return '0'+n;
+        }
+        return n;
+    }
+    
+
+    
+    
+  render()
+    {
+    let time_min = this.props.time;
+    let time_sec = 0;
+    let time_sec_p = this.pad(time_sec);
+
     return(
       <div id = "clock-whole">
         <div className = "inside-clock">
-          <h1>Otra Component!</h1>
+          <h1>{time_min + ":"+time_sec_p}</h1>
           <button className = "btn btn-success btn-lg">Start</button>
+          <button className = "btn btn-success btn-lg">Reset</button>
+         
         </div>
       </div>
     )
@@ -99,7 +122,7 @@ class App extends React.Component {
         <h1>Pomodoro Clock</h1>
         <br />
         <TimerForm />
-        <ClockFace />
+        <ClockFace time={4} />
 
       </div>
     );

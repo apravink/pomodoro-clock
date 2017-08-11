@@ -17,9 +17,14 @@ h3{
 }
 .inside-clock{
   display:inline-block;
-  margin: 120px 70px;
+  margin: 130px 85px;
   text-align:center;
+    
 }
+.timer-active{
+    color:greenyellow;
+}
+
 #clock-whole{
   width:400px;
   height:400px;
@@ -42,4 +47,12 @@ h3{
 }
 #time{
   display:inline-block
+}
+
+.btn{
+    margin:4px;
+}
+
+.isActive{
+    border-color:green;
 }
