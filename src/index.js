@@ -79,13 +79,15 @@ class ClockFace extends React.Component{
     super(props);
     this.state = {isActive:false,
                   isFinished:false,
-                  time_min:4,
+                  time_min:1,           //ToDo: Grab time from props on component render
                   time_sec:this.pad(0)
                  }
     this.countdownTimer = this.countdownTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
     
     }
+    
+    //Pretty useless function to pad an extra zero
     pad(n){
         if(n<10){
             return '0'+n;
@@ -93,12 +95,13 @@ class ClockFace extends React.Component{
         return n;
     }
     
+    //Start the countdown clock
     countdownTimer(){
         
         this.setState({
             isActive:true
         })
-        
+        this.tick();
 //        setInterval(function(){
 //            console.
 //        },1000)
@@ -108,6 +111,31 @@ class ClockFace extends React.Component{
         this.setState({
             isActive:false
         })
+    }
+    
+    tick(){
+        
+        //Handle minute decrement
+        if(parseInt(this.state.time_sec)===0){
+            
+            //Handle timeout
+            if(parseInt(this.state.time_min) ===0){
+                alert("Timeout")        //ToDo
+            }
+            
+            this.setState((prevState)=>{
+                return{time_min:prevState.time_min -1,
+                       time_sec:59}
+            })
+        }
+        //Handle Second decrement
+        else{
+            this.setState((prevState) => {
+                return {time_sec:parseInt(prevState.time_sec)-1}
+            })
+        }
+       
+        
     }
     
 
@@ -148,7 +176,7 @@ class App extends React.Component {
         <h1>Pomodoro Clock</h1>
         <br />
         <TimerForm />
-        <ClockFace time={4} />
+        <ClockFace time={1} />
 
       </div>
     );
