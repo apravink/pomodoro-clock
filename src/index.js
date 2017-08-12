@@ -68,7 +68,7 @@ class TimerForm extends React.Component {
 //--------------------------------------------------------//
 //ToDo
 /*
-1. Create states
+1. Create states 
     i. isActive
     ii.isfinished
 2. Create classes for the button and clock-face to turn green/red while running/stopped
@@ -80,7 +80,7 @@ class ClockFace extends React.Component{
     this.state = {isActive:false,
                   isFinished:false,
                   time_min:1,           //ToDo: Grab time from props on component render
-                  time_sec:this.pad(0)
+                  time_sec:0
                  }
     this.countdownTimer = this.countdownTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
@@ -95,6 +95,7 @@ class ClockFace extends React.Component{
         }
         return n;
     }
+    
     
     //Start the countdown clock
     countdownTimer(){
@@ -132,7 +133,7 @@ class ClockFace extends React.Component{
         }
         //Handle Second decrement
         else{
-       //TODO: Add padding for seconds < 10
+            
             this.setState((prevState) => {
                 return {time_sec:parseInt(prevState.time_sec)-1}
             });
@@ -145,6 +146,7 @@ class ClockFace extends React.Component{
     
     
   render()
+    
     {
         let isActive = this.state.isActive;
         let active_button =<button className = "btn btn-success btn-lg" onClick={this.countdownTimer}>Start</button>;
@@ -155,11 +157,16 @@ class ClockFace extends React.Component{
             
         }
         
+        let time_sec = this.state.time_sec;
+        if(this.state.time_sec<10){
+            time_sec = this.pad(time_sec)
+        }
+        
 
     return(
       <div className = {clock_classes}>
         <div className = "inside-clock">
-          <h1>{this.state.time_min + ":"+this.state.time_sec}</h1>
+          <h1>{this.state.time_min + ":"+time_sec}</h1>
             {active_button}
           <button className = "btn btn-success btn-lg">Reset</button>
          
@@ -173,6 +180,7 @@ class ClockFace extends React.Component{
 
 
 class App extends React.Component {
+    
   render() {
     return (
       <div>
