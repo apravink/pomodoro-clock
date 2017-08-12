@@ -84,6 +84,7 @@ class ClockFace extends React.Component{
                  }
     this.countdownTimer = this.countdownTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
+    this.tick = this.tick.bind(this);
     
     }
     
@@ -101,16 +102,16 @@ class ClockFace extends React.Component{
         this.setState({
             isActive:true
         })
-        this.tick();
-//        setInterval(function(){
-//            console.
-//        },1000)
+        this.countdown = setInterval(this.tick,1000);
+
     }
     
+    //Stop Countdown clock
     stopTimer(){
         this.setState({
             isActive:false
         })
+        clearInterval(this.countdown);
     }
     
     tick(){
@@ -120,7 +121,8 @@ class ClockFace extends React.Component{
             
             //Handle timeout
             if(parseInt(this.state.time_min) ===0){
-                alert("Timeout")        //ToDo
+                clearInterval(this.countdown);
+                
             }
             
             this.setState((prevState)=>{
@@ -130,9 +132,10 @@ class ClockFace extends React.Component{
         }
         //Handle Second decrement
         else{
+       //TODO: Add padding for seconds < 10
             this.setState((prevState) => {
                 return {time_sec:parseInt(prevState.time_sec)-1}
-            })
+            });
         }
        
         
