@@ -84,12 +84,13 @@ class ClockFace extends React.Component{
     super(props);
     this.state = {isActive:false,
                   isFinished:false,
-                  time_min:1,           //ToDo: Grab time from props on component render
+                  time_min:4,           //ToDo: Grab time from props on component render
                   time_sec:0
                  }
     this.countdownTimer = this.countdownTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
     this.tick = this.tick.bind(this);
+    this.resetTime = this.resetTime.bind(this);
     
     }
     
@@ -101,7 +102,9 @@ class ClockFace extends React.Component{
         return n;
     }
     componentWillReceiveProps(){
-        this.setState({time_min:this.props.time})
+        this.setState({time_min:this.props.time,
+                       time_sec:0})
+        this.stopTimer();
     }
     
     
@@ -149,6 +152,11 @@ class ClockFace extends React.Component{
        
         
     }
+    resetTime(){
+        this.setState({time_min:this.props.time,
+                       time_sec:0})
+        this.stopTimer();
+    }
     
 
     
@@ -176,7 +184,7 @@ class ClockFace extends React.Component{
         <div className = "inside-clock">
           <h1>{this.state.time_min + ":"+time_sec}</h1>
             {active_button}
-          <button className = "btn btn-success btn-lg">Reset</button>
+          <button className = "btn btn-success btn-lg" onClick={this.resetTime}>Reset</button>
          
         </div>
       </div>
