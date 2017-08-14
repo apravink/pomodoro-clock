@@ -57,3 +57,6 @@ h3{
 .isActive{
     border-color:greenyellow;
 }
+.isStopped{
+    border-color:orangered;
+}

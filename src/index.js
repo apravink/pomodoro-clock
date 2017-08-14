@@ -71,20 +71,15 @@ class TimerForm extends React.Component {
 }
 
 //--------------------------------------------------------//
-//ToDo
-/*
-1. Create states 
-    i. isActive
-    ii.isfinished
-2. Create classes for the button and clock-face to turn green/red while running/stopped
 
-*/
+
+
 class ClockFace extends React.Component{
      constructor(props){
     super(props);
     this.state = {isActive:false,
-                  isFinished:false,
-                  time_min:4,           //ToDo: Grab time from props on component render
+                  isStopped:false,
+                  time_min:4,           
                   time_sec:0
                  }
     this.countdownTimer = this.countdownTimer.bind(this);
@@ -105,6 +100,7 @@ class ClockFace extends React.Component{
         this.setState({time_min:this.props.time,
                        time_sec:0})
         this.stopTimer();
+        this.setState({isStopped:false});
     }
     
     
@@ -112,7 +108,8 @@ class ClockFace extends React.Component{
     countdownTimer(){
         
         this.setState({
-            isActive:true
+            isActive:true,
+            isStopped:false
         })
         this.countdown = setInterval(this.tick,1000);
 
@@ -121,7 +118,8 @@ class ClockFace extends React.Component{
     //Stop Countdown clock
     stopTimer(){
         this.setState({
-            isActive:false
+            isActive:false,
+            isStopped:true
         })
         clearInterval(this.countdown);
     }
@@ -156,6 +154,7 @@ class ClockFace extends React.Component{
         this.setState({time_min:this.props.time,
                        time_sec:0})
         this.stopTimer();
+        this.setState({isStopped:false});
     }
     
 
@@ -165,12 +164,16 @@ class ClockFace extends React.Component{
     
     {
         let isActive = this.state.isActive;
+        let isStopped = this.state.isStopped;
         let active_button =<button className = "btn btn-success btn-lg" onClick={this.countdownTimer}>Start</button>;
         var clock_classes = "clock-whole"
         if(isActive){
             active_button = <button className = "btn btn-danger btn-lg" onClick={this.stopTimer}>Stop</button>;
             clock_classes +=" isActive";
             
+        }
+        if(isStopped){
+            clock_classes+=" isStopped"
         }
         
         let time_sec = this.state.time_sec;
