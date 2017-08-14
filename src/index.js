@@ -14,7 +14,7 @@ const DownButton = props => {
 };
 
 const StatusButton = props => {
-  return <button className="inline-elements float-left">Set</button>;
+  return <button onClick = {props.onClick} className="inline-elements float-left">Set</button>;
 };
 
 const UpButton = props => {
@@ -31,6 +31,7 @@ class TimerForm extends React.Component {
     this.state = { time: 4 };
     this.incrementTimer = this.incrementTimer.bind(this);
     this.decrementTimer = this.decrementTimer.bind(this);
+    this.passState = this.passState.bind(this);
   }
 
   //Function to increment timer
@@ -51,6 +52,10 @@ class TimerForm extends React.Component {
     }
     
   }
+    passState(){
+        this.props.handleState(this.state.time);
+        
+    }
 
   render() {
     return (
@@ -58,7 +63,7 @@ class TimerForm extends React.Component {
         <UpButton onClick={this.incrementTimer} />
         <h3 className="float-left align-middle">{this.state.time} minutes </h3>
         <DownButton onClick={this.decrementTimer} />
-        <StatusButton />
+        <StatusButton onClick={this.passState} />
 
       </div>
     );
@@ -94,6 +99,9 @@ class ClockFace extends React.Component{
             return '0'+n;
         }
         return n;
+    }
+    componentWillReceiveProps(){
+        this.setState({time_min:this.props.time})
     }
     
     
@@ -180,14 +188,22 @@ class ClockFace extends React.Component{
 
 
 class App extends React.Component {
-    
+    constructor(props){
+        super(props);
+        this.state = {time_min:4};
+        this.handleState = this.handleState.bind(this);
+    }
+    handleState(s){
+        this.setState({time_min:s});
+        
+    }
   render() {
     return (
       <div>
         <h1>Pomodoro Clock</h1>
         <br />
-        <TimerForm />
-        <ClockFace time={1} />
+        <TimerForm handleState = {this.handleState}/>
+        <ClockFace time={this.state.time_min} />
 
       </div>
     );
